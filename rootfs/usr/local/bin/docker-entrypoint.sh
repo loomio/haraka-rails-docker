@@ -21,12 +21,10 @@ fi
 
 # Specify actual hostname.
 runCmd cp /rails.js /etc/haraka/plugins/
+runCmd cp /plugins /etc/haraka/config/
 
 echo "$ACCEPT_MAIL_FOR_HOSTNAME" > /etc/haraka/config/me
 echo "$ACCEPT_MAIL_FOR_HOSTNAME" > /etc/haraka/config/host_list
-echo "mail_from.is_resolvable
-rcpt_to.in_host_list
-rails" >> /etc/haraka/config/plugins
 
 currDir="$(pwd)"
 cd "$HARAKA_HOME"
