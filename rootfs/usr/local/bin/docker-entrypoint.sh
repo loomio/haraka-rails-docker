@@ -20,8 +20,19 @@ if [ ! -z "$APK_INSTALL_PACKAGES" ]; then
 fi
 
 # Specify actual hostname.
-echo "$HOSTNAME" > /etc/haraka/config/me
+runCmd cp /rails.js /etc/haraka/plugins/
 
+echo "$ACCEPT_MAIL_FOR_HOSTNAME" > /etc/haraka/config/me
+echo "$ACCEPT_MAIL_FOR_HOSTNAME" > /etc/haraka/config/host_list
+echo "rails" >> /etc/haraka/config/plugins
+
+currDir="$(pwd)"
+cd "$HARAKA_HOME"
+runCmd npm install
+runCmd npm install axios@0.27.2
+cd "$currDir"
+
+# might remove this
 # Install plugins from NPM if required.
 if [ ! -z "$HARAKA_INSTALL_PLUGINS" ]; then
   currDir="$(pwd)"
