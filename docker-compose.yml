@@ -1,0 +1,12 @@
+services:
+  haraka:
+    build: .
+    env_file: ./.env
+    ports:
+      - "25:25"
+    networks:
+      - main
+    restart: unless-stopped
+
+networks:
+  main:
