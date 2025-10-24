@@ -94,12 +94,13 @@ const http = require('http');
           },
         };
 
+        this.loginfo('sending request');
         const req = http.request(options, (res) => {
-          console.log('Response status:', res.statusCode);
-          res.on('data', chunk => console.log('Response chunk:', chunk.toString()));
+          this.loginfo('request status', res.statusCode);
+          res.on('data', chunk => this.logdebug('Response chunk:', chunk.toString()));
         });
 
-        req.on('error', e => console.error('Request error:', e));
+        req.on('error', e => this.logerror('Request error:', e));
 
         transaction.message_stream.pipe(req);
       };
@@ -131,11 +132,11 @@ const http = require('http');
       }
       this.loginfo('password', process.env.RAILS_INBOUND_EMAIL_PASSWORD);
       if (process.env.RAILS_INBOUND_EMAIL_PASSWORD == undefined) {
-        console.error('Missing RAILS_INBOUND_EMAIL_PASSWORD');
+        this.logerror('Missing RAILS_INBOUND_EMAIL_PASSWORD');
       }
 
       if (process.env.RAILS_INBOUND_EMAIL_URL == undefined) {
-        console.error('Missing RAILS_INBOUND_EMAIL_URL');
+        this.logerror('Missing RAILS_INBOUND_EMAIL_URL');
       }
     };
 
