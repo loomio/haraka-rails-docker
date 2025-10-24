@@ -24,6 +24,7 @@
 // SOFTWARE.
 
 const http = require('http');
+const https = require('https');
 
 (() => {
   const buildPluginFunction = () => {
@@ -82,10 +83,13 @@ const http = require('http');
         const authString = `actionmailbox:${process.env.RAILS_INBOUND_EMAIL_PASSWORD}`;
         const authBase64 = Buffer.from(authString).toString('base64');
 
+        const url = new URL(process.env.RAILS_INBOUND_EMAIL_URL);
+        const client = url.protocol === 'https:' ? https : http;
+
         const options = {
-          hostname: '192.168.20.26',
-          port: 3000,
-          path: '/rails/action_mailbox/relay/inbound_emails',
+          hostname: url.hostname,
+          port: url.port || (url.protocol === 'https:' ? 443 : 80),
+          path: url.pathname + url.search,
           method: 'POST',
           headers: {
             'Authorization': `Basic ${authBase64}`,
@@ -94,7 +98,7 @@ const http = require('http');
           },
         };
 
-        this.loginfo('sending request');
+        this.loginfo(`sending request to ${url.href}`);
         const req = http.request(options, (res) => {
           this.loginfo('request status', res.statusCode);
           res.on('data', chunk => this.logdebug('Response chunk:', chunk.toString()));
