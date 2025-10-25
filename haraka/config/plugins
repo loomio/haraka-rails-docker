@@ -23,7 +23,7 @@
 # p0f
 # geoip
 # asn
-# fcrdns
+fcrdns
 # dns-list
 
 # HELO
@@ -42,7 +42,7 @@
 # MAIL FROM
 # ----------
 mail_from.is_resolvable
-# spf
+spf
 
 # RCPT TO
 # ----------
