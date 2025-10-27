@@ -1,4 +1,3 @@
-# https://hub.docker.com/_/node
 FROM node:24-alpine
 
 ARG haraka_ver=3.1.1
